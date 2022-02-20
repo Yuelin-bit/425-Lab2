@@ -1,5 +1,5 @@
 EDA Netlist Writer report for DMCC
-Sat Feb 19 02:49:54 2022
+Sun Feb 20 14:45:18 2022
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -8,7 +8,9 @@ Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 ---------------------
   1. Legal Notice
   2. EDA Netlist Writer Summary
-  3. EDA Netlist Writer Messages
+  3. Simulation Settings
+  4. Simulation Generated Files
+  5. EDA Netlist Writer Messages
 
 
 
@@ -35,11 +37,43 @@ agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Sat Feb 19 02:49:54 2022 ;
+; EDA Netlist Writer Status ; Successful - Sun Feb 20 14:45:18 2022 ;
 ; Revision Name             ; DMCC                                  ;
 ; Top-level Entity Name     ; DMCC                                  ;
 ; Family                    ; Cyclone V                             ;
+; Simulation Files Creation ; Successful                            ;
 +---------------------------+---------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------+
+; Simulation Settings                                                                                                        ;
++---------------------------------------------------------------------------------------------------+------------------------+
+; Option                                                                                            ; Setting                ;
++---------------------------------------------------------------------------------------------------+------------------------+
+; Tool Name                                                                                         ; ModelSim-Altera (VHDL) ;
+; Generate functional simulation netlist                                                            ; Off                    ;
+; Time scale                                                                                        ; 1 ps                   ;
+; Truncate long hierarchy paths                                                                     ; Off                    ;
+; Map illegal HDL characters                                                                        ; Off                    ;
+; Flatten buses into individual nodes                                                               ; Off                    ;
+; Maintain hierarchy                                                                                ; Off                    ;
+; Bring out device-wide set/reset signals as ports                                                  ; Off                    ;
+; Enable glitch filtering                                                                           ; Off                    ;
+; Do not write top level VHDL entity                                                                ; Off                    ;
+; Disable detection of setup and hold time violations in the input registers of bi-directional pins ; Off                    ;
+; Architecture name in VHDL output netlist                                                          ; structure              ;
+; Generate third-party EDA tool command script for RTL functional simulation                        ; Off                    ;
+; Generate third-party EDA tool command script for gate-level simulation                            ; Off                    ;
++---------------------------------------------------------------------------------------------------+------------------------+
+
+
++-----------------------------------------------------------------+
+; Simulation Generated Files                                      ;
++-----------------------------------------------------------------+
+; Generated Files                                                 ;
++-----------------------------------------------------------------+
+; C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/DMCC.vho ;
++-----------------------------------------------------------------+
 
 
 +-----------------------------+
@@ -48,15 +82,15 @@ agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime EDA Netlist Writer
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Sat Feb 19 02:49:54 2022
-Info: Command: quartus_eda --read_settings_files=on --write_settings_files=off DMCC -c DMCC --gen_testbench
-Info (119006): Selected device 5CGXFC7C7F23C8 for design "DMCC"
+    Info: Processing started: Sun Feb 20 14:45:17 2022
+Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off DMCC -c DMCC
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (201002): Generated VHDL Test Bench File C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/DMCC.vht for simulation
-Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 1 warning
-    Info: Peak virtual memory: 4715 megabytes
-    Info: Processing ended: Sat Feb 19 02:49:54 2022
-    Info: Elapsed time: 00:00:00
+Warning (10905): Generated the EDA functional simulation netlist because it is the only supported netlist type for this device.
+Info (204019): Generated file DMCC.vho in folder "C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/" for EDA simulation tool
+Info: Quartus Prime EDA Netlist Writer was successful. 0 errors, 2 warnings
+    Info: Peak virtual memory: 4734 megabytes
+    Info: Processing ended: Sun Feb 20 14:45:18 2022
+    Info: Elapsed time: 00:00:01
     Info: Total CPU time (on all processors): 00:00:01
 
 

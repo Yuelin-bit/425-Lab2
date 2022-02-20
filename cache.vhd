@@ -43,6 +43,7 @@ signal next_state : state_type;
 type cache_def is array (0 to 31) of std_logic_vector (154 downto 0);
 signal cache2 : cache_def;
 --1 bit valid  + 1 bit dirty + 25 bit tag + 128 bit data
+-- 128 data + 25 tag + 1 dirty + 1 valid
 
 begin
 process (clock, reset)

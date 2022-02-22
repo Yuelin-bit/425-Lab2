@@ -155,8 +155,8 @@ begin
 	WAIT FOR clk_period;                                                                              
 	
 	-- INVALID  - WRITE MISS CLEAN and  VALID - READ HIT (CLEAN/DIRTY) 
-	-- (v=0, d=0, write, miss)
-	-- (v=1, d=0, read, hit)
+	-- (v=0, d=0, write, miss) CASE 3
+	-- (v=1, d=0, read,  hit ) CASE 10
 	s_addr <= "11111111111111111111111111111111";--32 bits                        
 	s_write <= '1';                                                      
 	s_writedata <= x"12345678";                                          
@@ -171,7 +171,7 @@ begin
 	wait for clk_period;
 	
 	-- INVALID - READ CLEAN MISS
-	-- (v=0, d=0, read, miss)
+	-- (v=0, d=0, read, miss) CASE 1
 	s_addr <= "11111111101111011111111110111111";                        
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
@@ -182,7 +182,7 @@ begin
 	wait for clk_period;
 
 	-- VALID  READ CLEAN MISS 
-	-- (v=1, d=0, read, miss)
+	-- (v=1, d=0, read, miss) CASE 9
 	s_addr <= "00000000000000000000000000000000";	
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
@@ -197,7 +197,7 @@ begin
 	wait for clk_period;
 
 	-- VALID WRITE CLEAN HIT 
-	-- (v=1, d=0, read, hit)
+	-- (v=1, d=0, write, hit) CASE 12
 	s_addr <= "10000000000000000000000000000000";	
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
@@ -212,7 +212,7 @@ begin
 	wait for clk_period;
 		
 	--VALID  WRITE CLEAN MISS
-	-- (v=1, d=0, write, miss)
+	-- (v=1, d=0, write, miss) CASE 11
 	s_addr <= "11100000000000000000000000000000";	
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
@@ -228,7 +228,7 @@ begin
 	wait for clk_period;
 	
 	-- VALID WRITE DIRTY HIT 
-	-- (v=1, d=0, read, miss)
+	-- (v=1, d=1, write, hit) CASE 16
 	s_addr <= "11000000000000000000000000000000";	
 	s_write <= '1';
 	s_read <= '0';
@@ -247,6 +247,7 @@ begin
 	wait for clk_period;
 	
 	-- VALID - WRITE MISS DIRTY
+	-- (v=1, d=1, write, miss) CASE 15
 	WAIT FOR clk_period;
 	s_addr <= "11111100000000000000000000000000";
 	s_write <= '1';
@@ -266,6 +267,7 @@ begin
 	wait for clk_period;
 
 	-- VALID - READ MISS DIRTY
+	-- (v=1, d=1, read, miss) CASE 13
 	WAIT FOR clk_period;
 	s_addr <= "11111110000000000000000000000000";
 	s_write <= '1';

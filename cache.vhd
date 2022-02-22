@@ -33,7 +33,7 @@ type state_type is (start, r, w, r_memread, r_memwrite, r_memwait, w_memwrite);
 signal state : state_type;
 signal next_state : state_type;
 
---Address struct
+--Address struct 
 --25 bits of tag
 --5 bis of index
 --2 bits of offset

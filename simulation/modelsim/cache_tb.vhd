@@ -113,36 +113,65 @@ begin
 end process;
 
 test_process : process                                                 
-begin                                                                  
+begin      
+
+	--Here are the 16 impossible cases
+	--All the invalid cases are imposible except the read clean miss and write clean miss
+	
+	-- CASE 1:  (v=0, d=0, read,  miss)
+	
+	-- CASE 2:  (v=0, d=0, read,  hit ) imposible 
+	
+	-- CASE 3:  (v=0, d=0, write, miss) 
+	
+	-- CASE 4:  (v=0, d=0, write, hit ) imposible 
+	
+	-- CASE 5:  (v=0, d=1, read,  miss) imposible 
+	
+	-- CASE 6:  (v=0, d=1, read,  hit ) imposible 
+	
+	-- CASE 7:  (v=0, d=1, write, miss) imposible 
+	
+	-- CASE 8:  (v=0, d=1, write, hit ) imposible 
+	
+	-- CASE 9:  (v=1, d=0, read,  miss)
+	
+	-- CASE 10: (v=1, d=0, read,  hit )
+	
+	-- CASE 11: (v=1, d=0, write, miss)
+	
+	-- CASE 12: (v=1, d=0, write, hit )
+	
+	-- CASE 13: (v=1, d=1, read,  miss)
+	
+	-- CASE 14: (v=1, d=1, read,  hit )
+	
+	-- CASE 15: (v=1, d=1, write, miss)
+	
+	-- CASE 16: (v=1, d=1, write, hit )
+	
                         
-	--IMPOSSIBLE CASES
-	--INVALID - READ CLEAN HIT 
-	--INVALID - READ DIRTY HIT 
-	--INVALID - READ DIRTY MISS
-	--INVALID - WRITE CLEAN HIT 
-	--INVALID - WRITE DIRTY HIT 
-	--INVALID - WRITE DIRTY MISS
-	
-	--HIT/MISS RELATE TO TAG HIT/MISS
                    
-	WAIT FOR clk_period;                                           
-	-- Attempt to write to cache                                     
+	WAIT FOR clk_period;                                                                              
 	
-	-- INVALID  - WRITE MISS CLEAN and  VALID - READ HIT (CLEAN/DIRTY)  
+	-- INVALID  - WRITE MISS CLEAN and  VALID - READ HIT (CLEAN/DIRTY) 
+	-- (v=0, d=0, write, miss)
+	-- (v=1, d=0, read, hit)
 	s_addr <= "11111111111111111111111111111111";--32 bits                        
 	s_write <= '1';                                                      
-	s_writedata <= x"000F000A";                                          
+	s_writedata <= x"12345678";                                          
 	wait until rising_edge(s_waitrequest);                               
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
 	wait until rising_edge(s_waitrequest);                               
-	assert s_readdata = x"000F000A" report "write unsuccessful" severity error;
+	assert s_readdata = x"12345678" report "error 1" severity error;
 	s_read <= '0';                                                       
 	s_write <= '0';                                                      
 	
 	wait for clk_period;
 	
 	-- INVALID - READ CLEAN MISS
+	-- (v=0, d=0, read, miss)
 	s_addr <= "11111111101111011111111110111111";                        
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
@@ -153,6 +182,7 @@ begin
 	wait for clk_period;
 
 	-- VALID  READ CLEAN MISS 
+	-- (v=1, d=0, read, miss)
 	s_addr <= "00000000000000000000000000000000";	
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
@@ -167,6 +197,7 @@ begin
 	wait for clk_period;
 
 	-- VALID WRITE CLEAN HIT 
+	-- (v=1, d=0, read, hit)
 	s_addr <= "10000000000000000000000000000000";	
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
@@ -181,6 +212,7 @@ begin
 	wait for clk_period;
 		
 	--VALID  WRITE CLEAN MISS
+	-- (v=1, d=0, write, miss)
 	s_addr <= "11100000000000000000000000000000";	
 	s_read <= '1';                                                       
 	s_write <= '0';                                                      
@@ -196,6 +228,7 @@ begin
 	wait for clk_period;
 	
 	-- VALID WRITE DIRTY HIT 
+	-- (v=1, d=0, read, miss)
 	s_addr <= "11000000000000000000000000000000";	
 	s_write <= '1';
 	s_read <= '0';

@@ -22,9 +22,9 @@ V3ZYLNEDCB4o]EBl2SD6f12
 !s100 C<;HKM7M38>>4jE0Q0h@Q2
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1645386970
+Z8 !s110 1645506144
 !i10b 1
-Z9 !s108 1645386970.000000
+Z9 !s108 1645506144.000000
 Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
 Z11 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
 !i113 1
@@ -50,7 +50,7 @@ R11
 R12
 R13
 Ecache_tb
-Z14 w1645386568
+Z14 w1645506139
 R1
 R2
 R3
@@ -78,8 +78,8 @@ R3
 Z19 DEx4 work 8 cache_tb 0 22 7E4^229J[_6oaW@8H^^z00
 l71
 L8
-Z20 Vf;XA4GN2Y]OcPVCe^M60h2
-Z21 !s100 HnLNj;R5G;F__bZFINZ<=0
+V0:X1<RTEYfoB2^PEH;Zkj2
+!s100 Q36zS>TaW>d15mPiL=cbh0
 R7
 32
 R8
@@ -91,22 +91,22 @@ R18
 R12
 R13
 Ememory
-Z22 w1609780044
+Z20 w1609780044
 R1
 R2
 R3
 R4
-Z23 8C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
-Z24 FC:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
+Z21 8C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
+Z22 FC:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
 l0
 L6
 V3LP4`=ezmehUVN:f8HSal1
 !s100 TL`MNK5NTn0=f?i`Ph2JS3
 R7
 32
-R8
+Z23 !s110 1645506143
 !i10b 1
-R9
+Z24 !s108 1645506143.000000
 Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
 Z26 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
 !i113 1
@@ -123,16 +123,16 @@ VRGS>@C^TliVBWJiQY=8il2
 !s100 Fl5=Y6J][VGa6l_6YBKG33
 R7
 32
-R8
+R23
 !i10b 1
-R9
+R24
 R25
 R26
 !i113 1
 R12
 R13
 Ememory_tb
-R22
+R20
 R1
 R2
 R3

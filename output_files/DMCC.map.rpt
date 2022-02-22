@@ -1,5 +1,5 @@
 Analysis & Synthesis report for DMCC
-Tue Feb 22 17:06:17 2022
+Tue Feb 22 18:19:35 2022
 Quartus Prime Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
 
 
@@ -43,7 +43,7 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Tue Feb 22 17:06:17 2022       ;
+; Analysis & Synthesis Status     ; Successful - Tue Feb 22 18:19:35 2022       ;
 ; Quartus Prime Version           ; 16.1.0 Build 196 10/24/2016 SJ Lite Edition ;
 ; Revision Name                   ; DMCC                                        ;
 ; Top-level Entity Name           ; DMCC                                        ;
@@ -257,7 +257,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 16.1.0 Build 196 10/24/2016 SJ Lite Edition
-    Info: Processing started: Tue Feb 22 17:06:09 2022
+    Info: Processing started: Tue Feb 22 18:19:27 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off DMCC -c DMCC
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
@@ -292,7 +292,7 @@ Info (21057): Implemented 11 device resources after synthesis - the final resour
     Info (21059): Implemented 1 output pins
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 15 warnings
     Info: Peak virtual memory: 4852 megabytes
-    Info: Processing ended: Tue Feb 22 17:06:17 2022
+    Info: Processing ended: Tue Feb 22 18:19:35 2022
     Info: Elapsed time: 00:00:08
     Info: Total CPU time (on all processors): 00:00:16
 

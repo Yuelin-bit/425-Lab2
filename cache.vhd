@@ -40,8 +40,8 @@ signal next_state : state_type;
 
 -- Cache struct [32]
 -- 128 data + 25 tag + 1 dirty + 1 valid
-type cache_def is array (0 to 31) of std_logic_vector (154 downto 0);
-signal cache2 : cache_def;
+type cache_type is array (0 to 31) of std_logic_vector (154 downto 0);
+signal cacheArray : cache_type;
 
 
 
@@ -51,7 +51,7 @@ begin
 
 	if reset = '1' then
 		state <= start;
-	elsif (clock'event and clock = '1') then
+	elsif (clock'event and clock = '1') then --rising edge
 		state <= next_state;
 	end if;
 	
@@ -83,28 +83,30 @@ begin
 			
 		when r =>
 			-- if valid and tags match
-			if cache2(index)(154) = '1' and cache2(index)(152 downto 128) = s_addr (31 downto 7) then --HIT
-				s_readdata <= cache2(index)(127 downto 0) ((Offset * 32) -1 downto 32 * (Offset - 1));
+			if cacheArray(index)(154) = '1' and cacheArray(index)(152 downto 128) = s_addr (31 downto 7) then -- If his, just raed data
+			
+				s_readdata <= cacheArray(index)(127 downto 0) ((Offset * 32) -1 downto 32 * (Offset - 1));
 				s_waitrequest <= '0';
 				next_state <= start;
-			elsif cache2(index)(153) = '1' then --MISS DIRTY
+			elsif cacheArray(index)(153) = '1' then --If it is a dirty miss, we write the data and read the data from memory.
 				next_state <= r_memwrite;
-			elsif cache2(index)(153) = '0' or  cache2(index)(153) = 'U' then --MISS CLEAN
+			elsif cacheArray(index)(153) = '0' or  cacheArray(index)(153) = 'U' then ---If it is a clean miss, just read the data from memory.
 				next_state <= r_memory;
 			else
 				next_state <= r;
 			end if;
 			
 		when r_memwrite =>
+		
 			if counter < 4 and m_waitrequest = '1' and next_state /= r_memory then -- EVICT
-				addr := cache2(index)(135 downto 128) & s_addr (6 downto 0);
+				addr := cacheArray(index)(135 downto 128) & s_addr (6 downto 0);
 				m_addr <= to_integer(unsigned (addr)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
-				m_writedata <= cache2(index)(127 downto 0) ((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1));
+				m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1));
 				counter := counter + 1;
 				next_state <= r_memwrite;
-			elsif counter = 4 then -- NOW READ FROM MEM
+			elsif counter = 4 then --read the data from memory.
 				counter := 0;
 				next_state <=r_memory;
 			else
@@ -113,31 +115,31 @@ begin
 			end if;
 			
 		when r_memory =>
-			if m_waitrequest = '1' then -- READ FROM MEM FIRST PART
+			if m_waitrequest = '1' then 
 				m_addr <= to_integer(unsigned(s_addr (14 downto 0))) + counter;
 				m_read <= '1';
 				m_write <= '0';
 				next_state <= r_memwait;
-			else
+			else -- wait
 				next_state <= r_memory;
 			end if;
 			
 		when r_memwait =>
-			if counter < 3 and m_waitrequest = '0' then -- READ FROM MEM SECOND PART
-				cache2(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
+			if counter < 3 and m_waitrequest = '0' then 
+				cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
 				counter := counter + 1;
 				m_read <= '0';
-				next_state <= r_memory;
-			elsif counter = 3 and m_waitrequest = '0' then -- EXTRA CYCLE TO ENSURE CACHE IS READ FIRST
-				cache2(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
+				next_state <= r_memory; -- Go back to counter++
+			elsif counter = 3 and m_waitrequest = '0' then 
+				cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
 				counter := counter + 1;
 				m_read <= '0';
 				next_state <= r_memwait;
-			elsif counter = 4 then -- PLACE DATA READ FROM MEM ONTO OUTPUT
-				s_readdata <= cache2(index)(127 downto 0) ((Offset * 32) -1 downto 32 * (Offset - 1));
-				cache2(index)(152 downto 128) <= s_addr (31 downto 7); --Tag
-				cache2(index)(154) <= '1'; --Valid
-				cache2(index)(153) <= '0'; --Clean
+			elsif counter = 4 then -- for the tag 
+				s_readdata <= cacheArray(index)(127 downto 0) ((Offset * 32) -1 downto 32 * (Offset - 1));
+				cacheArray(index)(152 downto 128) <= s_addr (31 downto 7); 
+				cacheArray(index)(154) <= '1'; 
+				cacheArray(index)(153) <= '0'; --Mark it clean
 				m_read <= '0';
 				m_write <= '0';
 				s_waitrequest <= '0';
@@ -147,14 +149,16 @@ begin
 				next_state <= r_memwait;
 			end if;
 		
-		when w =>
-			if cache2(index)(153) = '1' and next_state /= start and ( cache2(index)(154) /= '1' or cache2(index)(152 downto 128) /= s_addr (31 downto 7)) then --If it the dirty and miss we have to write the previous date in memory.
+		--write data in cache
+		when w => 
+			if cacheArray(index)(153) = '1' and ( cacheArray(index)(154) /= '1' or cacheArray(index)(152 downto 128) /= s_addr (31 downto 7)) and next_state /= start  then --If it the dirty and miss we have to write the previous date in memory.
 				next_state <= w_memory;
 			else
-				cache2(index)(153) <= '1'; -- DIRTY	
-				cache2(index)(154) <= '1'; --Valid
-				cache2(index)(127 downto 0)((Offset * 32) -1 downto 32 * (Offset - 1)) <= s_writedata; --DATA
-				cache2(index)(152 downto 128) <= s_addr (31 downto 7); --TAG
+				cacheArray(index)(153) <= '1'; --mark dirty
+				cacheArray(index)(154) <= '1';
+				
+				cacheArray(index)(127 downto 0)((Offset * 32) -1 downto 32 * (Offset - 1)) <= s_writedata;  --write data to cache
+				cacheArray(index)(152 downto 128) <= s_addr (31 downto 7); --TAG
 				s_waitrequest <= '0';
 				next_state <= start;
 					
@@ -163,20 +167,20 @@ begin
 		--write data in memory
 		when w_memory => 	
 			if counter <= 3 and m_waitrequest = '1' then --run 4 times
-				addr := cache2(index)(135 downto 128) & s_addr (6 downto 0); -- We have  8 tag 5 index and 2 offset
+				addr := cacheArray(index)(135 downto 128) & s_addr (6 downto 0); -- We have  8 tag 5 index and 2 offset
 				m_addr <= to_integer(unsigned (addr)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
-				m_writedata <= cache2(index)(127 downto 0) ((counter * 8) + 32 * (Offset - 1) + 7 downto  (counter * 8) + 32 * (Offset - 1)); -- locate the byte address
+				m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 32 * (Offset - 1) + 7 downto  (counter * 8) + 32 * (Offset - 1)); -- locate the byte address
 				counter := counter + 1;
 				next_state <= w_memory; -- continue the loop
 				
 			elsif counter = 4 then --reach the 4
-				cache2(index)(153) <= '1'; --mark dirty
-				cache2(index)(154) <= '1';
+				cacheArray(index)(153) <= '1'; --mark dirty
+				cacheArray(index)(154) <= '1';
 				
-				cache2(index)(127 downto 0)((Offset * 32) - 1 downto 32 * (Offset - 1)) <= s_writedata (31 downto 0); --write data to cache
-				cache2(index)(152 downto 128) <= s_addr (31 downto 7); 
+				cacheArray(index)(127 downto 0)((Offset * 32) - 1 downto 32 * (Offset - 1)) <= s_writedata (31 downto 0); --write data to cache
+				cacheArray(index)(152 downto 128) <= s_addr (31 downto 7); 
 
 				counter := 0; --reset counter
 				s_waitrequest <= '0';

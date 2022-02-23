@@ -101,7 +101,14 @@ begin
 				m_addr <= to_integer(unsigned (temp)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
-				m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1));
+				--m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1));
+				case counter is
+				when 0 => m_writedata <= cacheArray(index)(127 downto 0) ((0 * 8) + 7 + 32 * (Offset - 1) downto  (0 * 8) + 32 * (Offset - 1));
+				when 1 => m_writedata <= cacheArray(index)(127 downto 0) ((1 * 8) + 7 + 32 * (Offset - 1) downto  (1 * 8) + 32 * (Offset - 1));
+				when 2 => m_writedata <= cacheArray(index)(127 downto 0) ((2 * 8) + 7 + 32 * (Offset - 1) downto  (2 * 8) + 32 * (Offset - 1));
+				when 3 => m_writedata <= cacheArray(index)(127 downto 0) ((3 * 8) + 7 + 32 * (Offset - 1) downto  (3 * 8) + 32 * (Offset - 1));
+				when others => report "Illegal value for counter" severity FAILURE;
+				end case;
 				counter := counter + 1;
 				next_state <= r_memwrite;
 			elsif counter = 4 then --read the data from memory.
@@ -124,7 +131,13 @@ begin
 			
 		when r_memUpdate =>
 			if counter < 3 and m_waitrequest = '0' then 
-				cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
+				-- cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
+				case counter is
+				when 0 => cacheArray(index)(127 downto 0)((0 * 8) + 7 + 32 * (Offset - 1) downto  (0 * 8) + 32 * (Offset - 1)) <= m_readdata;
+				when 1 => cacheArray(index)(127 downto 0)((1 * 8) + 7 + 32 * (Offset - 1) downto  (1 * 8) + 32 * (Offset - 1)) <= m_readdata;
+				when 2 => cacheArray(index)(127 downto 0)((2 * 8) + 7 + 32 * (Offset - 1) downto  (2 * 8) + 32 * (Offset - 1)) <= m_readdata;
+				when others => report "Illegal value for counter" severity FAILURE;
+				end case;
 				counter := counter + 1;
 				m_read <= '0';
 				next_state <= r_memory; -- Go back to counter++

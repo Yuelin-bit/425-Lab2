@@ -70,6 +70,9 @@ begin
 	case state is
 	
 		when start =>
+            m_read <= '0';
+            m_write <= '0';
+        
 			s_waitrequest <= '1';
 			if s_read = '1' then --READ
 				next_state <= r;
@@ -101,7 +104,17 @@ begin
 				m_addr <= to_integer(unsigned (temp)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
-				m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1));
+                
+				-- m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1));
+                -- need to unroll possible values of counter variable
+                case counter is
+                when 0 => m_writedata <= cacheArray(index)(127 downto 0) ((0 * 8) + 7 + 32 * (Offset - 1) downto  (0 * 8) + 32 * (Offset - 1));
+                when 1 => m_writedata <= cacheArray(index)(127 downto 0) ((1 * 8) + 7 + 32 * (Offset - 1) downto  (1 * 8) + 32 * (Offset - 1));
+                when 2 => m_writedata <= cacheArray(index)(127 downto 0) ((2 * 8) + 7 + 32 * (Offset - 1) downto  (2 * 8) + 32 * (Offset - 1));
+                when 3 => m_writedata <= cacheArray(index)(127 downto 0) ((3 * 8) + 7 + 32 * (Offset - 1) downto  (3 * 8) + 32 * (Offset - 1));
+                when others => report "Illegal value for counter" severity FAILURE;
+                end case;
+                
 				counter := counter + 1;
 				next_state <= r_memwrite;
 			elsif counter = 4 then --read the data from memory.
@@ -124,12 +137,23 @@ begin
 			
 		when r_memUpdate =>
 			if counter < 3 and m_waitrequest = '0' then 
-				cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
-				counter := counter + 1;
+            
+				-- cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
+                -- same as above, need to unroll possible values of variable counter
+                case counter is
+                when 0 => cacheArray(index)(127 downto 0)((0 * 8) + 7 + 32 * (Offset - 1) downto  (0 * 8) + 32 * (Offset - 1)) <= m_readdata;
+                when 1 => cacheArray(index)(127 downto 0)((1 * 8) + 7 + 32 * (Offset - 1) downto  (1 * 8) + 32 * (Offset - 1)) <= m_readdata;
+                when 2 => cacheArray(index)(127 downto 0)((2 * 8) + 7 + 32 * (Offset - 1) downto  (2 * 8) + 32 * (Offset - 1)) <= m_readdata;
+                when others => report "Illegal value for counter" severity FAILURE;
+                end case;
+            
+                counter := counter + 1;
 				m_read <= '0';
 				next_state <= r_memory; -- Go back to counter++
+                
 			elsif counter = 3 and m_waitrequest = '0' then 
-				cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
+                -- since counter is always 3 in this branch, use constant value instead of variable (counter = 3 in this branch)
+				cacheArray(index)(127 downto 0)((3 * 8) + 7 + 32 * (Offset - 1) downto  (3 * 8) + 32 * (Offset - 1)) <= m_readdata;
 				counter := counter + 1;
 				m_read <= '0';
 				next_state <= r_memUpdate;

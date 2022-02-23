@@ -29,11 +29,10 @@ end cache;
 
 architecture arch of cache is
 
-type state_type is (start, r, w, r_memory, r_memwrite, r_memwait, w_memory);
+
+type state_type is (start, r, w, r_memory, r_memwrite, r_memUpdate, w_memory);
 signal state : state_type;
 signal next_state : state_type;
-
-
 -- 25 tag + 5 index + 2 offset.
 -- Note: 2 offset is for words location, we need 4 times to r/w bytes.
 
@@ -61,13 +60,12 @@ process (s_read, s_write, m_waitrequest, state)
 
 	variable index : INTEGER;	
 	variable Offset : INTEGER := 0;
-	variable off : INTEGER := Offset - 1;
-	variable counter : INTEGER := 0;
-	variable addr : std_logic_vector (14 downto 0);
+	variable counter : INTEGER := 0; -- 1 word = 4 bytes, counter <= 4
+	variable temp : std_logic_vector (14 downto 0);
 begin
 	index := to_integer(unsigned(s_addr(6 downto 2)));
-	Offset := to_integer(unsigned(s_addr(1 downto 0))) + 1;
-	off :=  Offset - 1;
+	Offset := to_integer(unsigned(s_addr(1 downto 0))) +1; -- 1,2,3,4
+
 
 	case state is
 	
@@ -83,7 +81,7 @@ begin
 			
 		when r =>
 			-- if valid and tags match
-			if cacheArray(index)(154) = '1' and cacheArray(index)(152 downto 128) = s_addr (31 downto 7) then -- If his, just raed data
+			if cacheArray(index)(154) = '1' and cacheArray(index)(152 downto 128) = s_addr (31 downto 7) then -- If hit, just raed data
 			
 				s_readdata <= cacheArray(index)(127 downto 0) ((Offset * 32) -1 downto 32 * (Offset - 1));
 				s_waitrequest <= '0';
@@ -99,8 +97,8 @@ begin
 		when r_memwrite =>
 		
 			if counter < 4 and m_waitrequest = '1' and next_state /= r_memory then -- EVICT
-				addr := cacheArray(index)(135 downto 128) & s_addr (6 downto 0);
-				m_addr <= to_integer(unsigned (addr)) + counter ;
+				temp := cacheArray(index)(135 downto 128) & s_addr (6 downto 0);
+				m_addr <= to_integer(unsigned (temp)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
 				m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1));
@@ -119,12 +117,12 @@ begin
 				m_addr <= to_integer(unsigned(s_addr (14 downto 0))) + counter;
 				m_read <= '1';
 				m_write <= '0';
-				next_state <= r_memwait;
+				next_state <= r_memUpdate;
 			else -- wait
 				next_state <= r_memory;
 			end if;
 			
-		when r_memwait =>
+		when r_memUpdate =>
 			if counter < 3 and m_waitrequest = '0' then 
 				cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
 				counter := counter + 1;
@@ -134,7 +132,7 @@ begin
 				cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
 				counter := counter + 1;
 				m_read <= '0';
-				next_state <= r_memwait;
+				next_state <= r_memUpdate;
 			elsif counter = 4 then -- for the tag 
 				s_readdata <= cacheArray(index)(127 downto 0) ((Offset * 32) -1 downto 32 * (Offset - 1));
 				cacheArray(index)(152 downto 128) <= s_addr (31 downto 7); 
@@ -146,7 +144,7 @@ begin
 				counter := 0;
 				next_state <= start;
 			else
-				next_state <= r_memwait;
+				next_state <= r_memUpdate;
 			end if;
 		
 		--write data in cache
@@ -167,8 +165,8 @@ begin
 		--write data in memory
 		when w_memory => 	
 			if counter <= 3 and m_waitrequest = '1' then --run 4 times
-				addr := cacheArray(index)(135 downto 128) & s_addr (6 downto 0); -- We have  8 tag 5 index and 2 offset
-				m_addr <= to_integer(unsigned (addr)) + counter ;
+				temp := cacheArray(index)(135 downto 128) & s_addr (6 downto 0); -- We have  8 tag 5 index and 2 offset
+				m_addr <= to_integer(unsigned (temp)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
 				m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 32 * (Offset - 1) + 7 downto  (counter * 8) + 32 * (Offset - 1)); -- locate the byte address

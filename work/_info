@@ -9,7 +9,7 @@ z2
 cModel Technology
 dC:/intelFPGA_lite/16.1
 Ecache
-Z0 w1645573181
+Z0 w1645576793
 Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
@@ -22,9 +22,9 @@ V3ZYLNEDCB4o]EBl2SD6f12
 !s100 C<;HKM7M38>>4jE0Q0h@Q2
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1645573551
+Z8 !s110 1645577989
 !i10b 1
-Z9 !s108 1645573551.000000
+Z9 !s108 1645577989.000000
 Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
 Z11 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
 !i113 1
@@ -50,7 +50,7 @@ R11
 R12
 R13
 Ecache_tb
-Z14 w1645512239
+Z14 w1645577560
 R1
 R2
 R3
@@ -78,8 +78,8 @@ R3
 Z19 DEx4 work 8 cache_tb 0 22 7E4^229J[_6oaW@8H^^z00
 l71
 L8
-Z20 VFI_ZFDMDWMfFC6MYZk[C^3
-Z21 !s100 QcJ3KKBA<HWX_J>dhPFHi3
+VWXdf3AkPUO[8;i?i06LNo0
+!s100 9iWV2e:=6ShiZ2LBJ;_cT1
 R7
 32
 R8
@@ -91,13 +91,13 @@ R18
 R12
 R13
 Ememory
-Z22 w1609780044
+Z20 w1609780044
 R1
 R2
 R3
 R4
-Z23 8C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
-Z24 FC:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
+Z21 8C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
+Z22 FC:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
 l0
 L6
 V3LP4`=ezmehUVN:f8HSal1
@@ -107,8 +107,8 @@ R7
 R8
 !i10b 1
 R9
-Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
-Z26 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
+Z23 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
+Z24 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
 !i113 1
 R12
 R13
@@ -126,19 +126,19 @@ R7
 R8
 !i10b 1
 R9
-R25
-R26
+R23
+R24
 !i113 1
 R12
 R13
 Ememory_tb
-R22
+R20
 R1
 R2
 R3
 R4
-Z27 8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
-Z28 FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
+Z25 8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
+Z26 FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
 l0
 L5
 V_kiS2gc@klE4Vk3RdCF4^2
@@ -148,8 +148,8 @@ R7
 R8
 !i10b 1
 R9
-Z29 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
-Z30 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
+Z27 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
+Z28 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
 !i113 1
 R12
 R13
@@ -167,8 +167,8 @@ R7
 R8
 !i10b 1
 R9
-R29
-R30
+R27
+R28
 !i113 1
 R12
 R13

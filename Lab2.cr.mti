@@ -1,4 +1,4 @@
-C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd
+C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd {2 {vcom -work work -2002 -explicit -stats=none C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -6,6 +6,7 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Loading package NUMERIC_STD
 -- Compiling entity cache
 -- Compiling architecture arch of cache
+** Warning: C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd(87): (vcom-1083) Implicit array operator "/=" always returns TRUE (left length 9 is not equal to right length 25).
 
 } {} {}} C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016

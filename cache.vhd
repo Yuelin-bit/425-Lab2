@@ -87,7 +87,7 @@ begin
 			
 		--write data in cache
 		when w => 
-			if cacheArray(index)(137) = '1' and (cacheArray(index)(138) /= '1' or cacheArray(index)(136 downto 128) /= s_addr (31 downto 7)) and next_state /= start  then --If it the dirty and miss we have to write the previous date in memory.
+			if cacheArray(index)(137) = '1' and (cacheArray(index)(138) /= '1' or cacheArray(index)(136 downto 128) /= s_addr (15 downto 7)) and next_state /= start  then --If it the dirty and miss we have to write the previous date in memory.
 				next_state <= w_memory;
 			else
 				cacheArray(index)(137) <= '1'; --mark dirty

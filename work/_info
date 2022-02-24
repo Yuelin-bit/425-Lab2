@@ -9,24 +9,24 @@ z2
 cModel Technology
 dC:/intelFPGA_lite/16.1
 Ecache
-Z0 w1645655416
+Z0 w1645661323
 Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
 Z4 dC:/Users/yueli/Desktop/425/P2/Lab2
-Z5 8C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd
-Z6 FC:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd
+Z5 8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
+Z6 FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
 l0
 L5
 V3ZYLNEDCB4o]EBl2SD6f12
 !s100 C<;HKM7M38>>4jE0Q0h@Q2
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1645655459
+Z8 !s110 1645662775
 !i10b 1
-Z9 !s108 1645655459.000000
-Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
-Z11 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
+Z9 !s108 1645662775.000000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd|
+Z11 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd|
 !i113 1
 Z12 o-work work -2002 -explicit
 Z13 tExplicit 1 CvgOpt 0
@@ -34,11 +34,11 @@ Aarch
 R1
 R2
 R3
-DEx4 work 5 cache 0 22 3ZYLNEDCB4o]EBl2SD6f12
+Z14 DEx4 work 5 cache 0 22 3ZYLNEDCB4o]EBl2SD6f12
 l49
 L30
-VzdDSfhf0Hgjzb@7cGd=_o0
-!s100 K;NJKKo9GLNTbTU=kS9jj0
+VaI:SeAkhoa5]>WIKoo1>43
+!s100 ]ELmc`jRbFYX@=G5YFVBU0
 R7
 32
 R8
@@ -50,24 +50,24 @@ R11
 R12
 R13
 Ecache_tb
-Z14 w1645578040
+Z15 w1645578040
 R1
 R2
 R3
 R4
-Z15 8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
-Z16 FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
+R5
+R6
 l0
 L5
 V7E4^229J[_6oaW@8H^^z00
 !s100 N8hTJD?ado=UI;TQE4:Ql3
 R7
 32
-R8
+Z16 !s110 1645655459
 !i10b 1
-R9
-Z17 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd|
-Z18 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd|
+Z17 !s108 1645655459.000000
+R10
+R11
 !i113 1
 R12
 R13
@@ -75,29 +75,29 @@ Abehaviour
 R1
 R2
 R3
-Z19 DEx4 work 8 cache_tb 0 22 7E4^229J[_6oaW@8H^^z00
+DEx4 work 8 cache_tb 0 22 7E4^229J[_6oaW@8H^^z00
 l71
 L8
-Z20 VFI_ZFDMDWMfFC6MYZk[C^3
-Z21 !s100 QcJ3KKBA<HWX_J>dhPFHi3
+VFI_ZFDMDWMfFC6MYZk[C^3
+!s100 QcJ3KKBA<HWX_J>dhPFHi3
 R7
 32
-R8
+R16
 !i10b 1
-R9
 R17
-R18
+R10
+R11
 !i113 1
 R12
 R13
 Ememory
-Z22 w1609780044
+Z18 w1609780044
 R1
 R2
 R3
 R4
-Z23 8C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
-Z24 FC:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
+Z19 8C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
+Z20 FC:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
 l0
 L6
 V3LP4`=ezmehUVN:f8HSal1
@@ -107,8 +107,8 @@ R7
 R8
 !i10b 1
 R9
-Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
-Z26 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
+Z21 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
+Z22 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
 !i113 1
 R12
 R13
@@ -126,19 +126,19 @@ R7
 R8
 !i10b 1
 R9
-R25
-R26
+R21
+R22
 !i113 1
 R12
 R13
 Ememory_tb
-R22
+R18
 R1
 R2
 R3
 R4
-Z27 8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
-Z28 FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
+Z23 8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
+Z24 FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
 l0
 L5
 V_kiS2gc@klE4Vk3RdCF4^2
@@ -148,8 +148,8 @@ R7
 R8
 !i10b 1
 R9
-Z29 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
-Z30 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
+Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
+Z26 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
 !i113 1
 R12
 R13
@@ -167,8 +167,8 @@ R7
 R8
 !i10b 1
 R9
-R29
-R30
+R25
+R26
 !i113 1
 R12
 R13

@@ -16,16 +16,6 @@ Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  
 -- Compiling entity memory
 -- Compiling architecture rtl of memory
 
-} {} {}} C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd {2 {vcom -work work -2002 -explicit -stats=none C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
-Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package NUMERIC_STD
--- Compiling entity cache
--- Compiling architecture arch of cache
-** Warning: C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd(90): (vcom-1083) Implicit array operator "/=" always returns TRUE (left length 9 is not equal to right length 25).
-
 } {} {}} C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 10.5b Compiler 2016.10 Oct  5 2016
 -- Loading package STANDARD

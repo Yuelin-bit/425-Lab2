@@ -33,15 +33,18 @@ architecture arch of cache is
 type state_type is (start, r, w, r_memory, r_memwrite, r_memUpdate, w_memory);
 signal state : state_type;
 signal next_state : state_type;
--- 25 tag + 5 index + 2 offset.
--- Note: 2 offset is for words location, we need 4 times to r/w bytes.
--- After ignorance, 16 bit = 9 tag + 5 index + 2 offset.
+
+-- 17 ignore tag + 6 tag + 5 index + 2 word offset + 2 byte offset.
+-- since address is multiple of 4, byte offset is '00'
+-- Note: 2  used offset is for words location, we need 4 times to r/w bytes.
+
 
 
 
 -- cacheArray[32]
--- 128 data + 9 tag + 1 dirty + 1 valid = 139 bits
-type cache_type is array (0 to 31) of std_logic_vector (138 downto 0);
+
+-- 128 data + 6 tag + 1 dirty + 1 valid = 136 bits
+type cache_type is array (0 to 31) of std_logic_vector (135 downto 0);
 signal cacheArray : cache_type;
 
 
@@ -65,8 +68,8 @@ process (s_read, s_write, m_waitrequest, state)
 	variable counter : INTEGER := 0; -- 1 word = 4 bytes, counter <= 4
 	variable temp : std_logic_vector (14 downto 0);
 begin
-	index := to_integer(unsigned(s_addr(6 downto 2)));
-	Offset := to_integer(unsigned(s_addr(1 downto 0))) +1; -- 1,2,3,4
+	index := to_integer(unsigned(s_addr(8 downto 4)));
+	Offset := to_integer(unsigned(s_addr(3 downto 2))) +1; -- 1,2,3,4
 
 
 	case state is
@@ -87,14 +90,14 @@ begin
 			
 		--write data in cache
 		when w => 
-			if cacheArray(index)(137) = '1' and (cacheArray(index)(138) /= '1' or cacheArray(index)(136 downto 128) /= s_addr (15 downto 7)) and next_state /= start  then --If it the dirty and miss we have to write the previous date in memory.
+			if cacheArray(index)(134) = '1' and (cacheArray(index)(135) /= '1' or cacheArray(index)(133 downto 128) /= s_addr (14 downto 9)) and next_state /= start  then --If it the dirty and miss we have to write the previous date in memory.
 				next_state <= w_memory;
 			else
-				cacheArray(index)(137) <= '1'; --mark dirty
-				cacheArray(index)(138) <= '1';
+				cacheArray(index)(134) <= '1'; --mark dirty
+				cacheArray(index)(135) <= '1';
 				
 				cacheArray(index)(127 downto 0)((Offset * 32) -1 downto 32 * (Offset - 1)) <= s_writedata;  --write data to cache
-				cacheArray(index)(136 downto 128) <= s_addr (15 downto 7); 
+				cacheArray(index)(133 downto 128) <= s_addr (14 downto 9); 
 				s_waitrequest <= '0';
 				next_state <= start;
 					
@@ -105,7 +108,7 @@ begin
 		--write data in memory
 		when w_memory => 	
 			if counter <= 3 and m_waitrequest = '1' then --run 4 times
-				temp := cacheArray(index)(135 downto 128) & s_addr (6 downto 0); -- We have  8 tag 5 index and 2 offset
+				temp := s_addr (14 downto 0); -- We have  6 tag 5 index and 2 word offset
 				m_addr <= to_integer(unsigned (temp)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
@@ -114,11 +117,11 @@ begin
 				next_state <= w_memory; -- continue the loop
 				
 			elsif counter = 4 then --reach the 4
-				cacheArray(index)(137) <= '1'; --mark dirty
-				cacheArray(index)(138) <= '1';
+				cacheArray(index)(134) <= '1'; --mark dirty
+				cacheArray(index)(135) <= '1';
 				
 				cacheArray(index)(127 downto 0)((Offset * 32) - 1 downto 32 * (Offset - 1)) <= s_writedata (31 downto 0); --write data to cache
-				cacheArray(index)(136 downto 128) <= s_addr (15 downto 7); 
+				cacheArray(index)(133 downto 128) <= s_addr (14 downto 9); 
 
 				counter := 0; --reset counter
 				s_waitrequest <= '0';
@@ -132,14 +135,14 @@ begin
 			
 		--read data in cache
 		when r =>
-			if cacheArray(index)(138) = '1' and cacheArray(index)(136 downto 128) = s_addr (15 downto 7) then -- If hit, just raed data
+			if cacheArray(index)(135) = '1' and cacheArray(index)(133 downto 128) = s_addr (14 downto 9) then -- If hit, just raed data
 			
 				s_readdata <= cacheArray(index)(127 downto 0) ((Offset * 32) -1 downto 32 * (Offset - 1));
 				s_waitrequest <= '0';
 				next_state <= start;
-			elsif cacheArray(index)(137) = '1' then --If it is a dirty miss, we write the data and read the data from memory.
+			elsif cacheArray(index)(134) = '1' then --If it is a dirty miss, we write the data and read the data from memory.
 				next_state <= r_memwrite;
-			elsif cacheArray(index)(137) = '0' or  cacheArray(index)(137) = 'U' then ---If it is a clean miss, just read the data from memory.
+			elsif cacheArray(index)(134) = '0' or  cacheArray(index)(134) = 'U' then ---If it is a clean miss, just read the data from memory.
 				next_state <= r_memory;
 			else
 				next_state <= r;
@@ -150,20 +153,17 @@ begin
 			
 		when r_memwrite =>
 			if counter < 4 and m_waitrequest = '1' and next_state /= r_memory then 
-				temp := cacheArray(index)(135 downto 128) & s_addr (6 downto 0);
+				temp := s_addr (14 downto 0);
 				m_addr <= to_integer(unsigned (temp)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
-                
-				-- m_writedata <= cacheArray(index)(127 downto 0) ((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1));
-                -- need to unroll possible values of counter variable
-                case counter is
+            case counter is
                 when 0 => m_writedata <= cacheArray(index)(127 downto 0) ((0 * 8) + 7 + 32 * (Offset - 1) downto  (0 * 8) + 32 * (Offset - 1));
                 when 1 => m_writedata <= cacheArray(index)(127 downto 0) ((1 * 8) + 7 + 32 * (Offset - 1) downto  (1 * 8) + 32 * (Offset - 1));
                 when 2 => m_writedata <= cacheArray(index)(127 downto 0) ((2 * 8) + 7 + 32 * (Offset - 1) downto  (2 * 8) + 32 * (Offset - 1));
                 when 3 => m_writedata <= cacheArray(index)(127 downto 0) ((3 * 8) + 7 + 32 * (Offset - 1) downto  (3 * 8) + 32 * (Offset - 1));
-                when others => report "Illegal value for counter" severity FAILURE;
-                end case;
+                when others => report "Error 01234-1" severity FAILURE;
+            end case;
                 
 				counter := counter + 1;
 				next_state <= r_memwrite;
@@ -191,31 +191,27 @@ begin
 			
 		when r_memUpdate =>
 			if counter < 3 and m_waitrequest = '0' then 
-            
-				-- cacheArray(index)(127 downto 0)((counter * 8) + 7 + 32 * (Offset - 1) downto  (counter * 8) + 32 * (Offset - 1)) <= m_readdata;
-                -- same as above, need to unroll possible values of variable counter
-                case counter is
+            case counter is
                 when 0 => cacheArray(index)(127 downto 0)((0 * 8) + 7 + 32 * (Offset - 1) downto  (0 * 8) + 32 * (Offset - 1)) <= m_readdata;
                 when 1 => cacheArray(index)(127 downto 0)((1 * 8) + 7 + 32 * (Offset - 1) downto  (1 * 8) + 32 * (Offset - 1)) <= m_readdata;
                 when 2 => cacheArray(index)(127 downto 0)((2 * 8) + 7 + 32 * (Offset - 1) downto  (2 * 8) + 32 * (Offset - 1)) <= m_readdata;
                 when others => report "Illegal value for counter" severity FAILURE;
-                end case;
-            
-                counter := counter + 1;
+            end case;
+            counter := counter + 1;
 				m_read <= '0';
 				next_state <= r_memory; -- Go back to counter++
-                
+				
 			elsif counter = 3 and m_waitrequest = '0' then 
-                -- since counter is always 3 in this branch, use constant value instead of variable (counter = 3 in this branch)
 				cacheArray(index)(127 downto 0)((3 * 8) + 7 + 32 * (Offset - 1) downto  (3 * 8) + 32 * (Offset - 1)) <= m_readdata;
 				counter := counter + 1;
 				m_read <= '0';
 				next_state <= r_memUpdate;
+				
 			elsif counter = 4 then -- for the tag 
 				s_readdata <= cacheArray(index)(127 downto 0) ((Offset * 32) -1 downto 32 * (Offset - 1));
-				cacheArray(index)(136 downto 128) <= s_addr (15 downto 7); 
-				cacheArray(index)(138) <= '1'; 
-				cacheArray(index)(137) <= '0'; --Mark it clean
+				cacheArray(index)(133 downto 128) <= s_addr (14 downto 9); 
+				cacheArray(index)(135) <= '1'; 
+				cacheArray(index)(134) <= '0'; --Mark it clean
 				m_read <= '0';
 				m_write <= '0';
 				s_waitrequest <= '0';

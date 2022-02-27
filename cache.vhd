@@ -90,7 +90,7 @@ begin
 			
 		--write data in cache
 		when w => 
-			if cacheArray(index)(134) = '1' and (cacheArray(index)(135) /= '1' or cacheArray(index)(133 downto 128) /= s_addr (14 downto 9)) and next_state /= start  then --If it the dirty and miss we have to write the previous date in memory.
+			if cacheArray(index)(134) = '1' and (cacheArray(index)(135) /= '1' or cacheArray(index)(133 downto 128) /= s_addr (14 downto 9)) and next_state /= start  then --If it the dirty and miss we have to write the previous data in memory.
 				next_state <= w_memory;
 			else
 				cacheArray(index)(134) <= '1'; --mark dirty
@@ -108,7 +108,7 @@ begin
 		--write data in memory
 		when w_memory => 	
 			if counter <= 3 and m_waitrequest = '1' then --run 4 times
-				temp := s_addr (14 downto 0); -- We have  6 tag 5 index and 2 word offset
+				temp := cacheArray(index)(133 downto 128) & s_addr (8 downto 0); -- We have  6 tag 5 index and 2 word offset
 				m_addr <= to_integer(unsigned (temp)) + counter ;
 				m_write <= '1';
 				m_read <= '0';
@@ -153,7 +153,7 @@ begin
 			
 		when r_memwrite =>
 			if counter < 4 and m_waitrequest = '1' and next_state /= r_memory then 
-				temp := s_addr (14 downto 0);
+				temp := cacheArray(index)(133 downto 128) & s_addr (8 downto 0);
 				m_addr <= to_integer(unsigned (temp)) + counter ;
 				m_write <= '1';
 				m_read <= '0';

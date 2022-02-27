@@ -9,7 +9,7 @@ z2
 cModel Technology
 dC:/intelFPGA_lite/16.1
 Ecache
-Z0 w1645745693
+Z0 w1645913348
 Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
@@ -22,9 +22,9 @@ V3ZYLNEDCB4o]EBl2SD6f12
 !s100 C<;HKM7M38>>4jE0Q0h@Q2
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1645747843
+Z8 !s110 1645945376
 !i10b 1
-Z9 !s108 1645747843.000000
+Z9 !s108 1645945376.000000
 Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
 Z11 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
 !i113 1
@@ -37,8 +37,8 @@ R3
 DEx4 work 5 cache 0 22 3ZYLNEDCB4o]EBl2SD6f12
 l52
 L30
-VZeGTDJ]7kFG=66XoCJ2C<3
-!s100 XzDk>bbcKIVU1[LRo3YQ@3
+VUSI<;=ZH;mb]7cZ6N5Ozk0
+!s100 cT^5mE23[cdnK_HT;KTd@3
 R7
 32
 R8
@@ -50,7 +50,7 @@ R11
 R12
 R13
 Ecache_tb
-Z14 w1645747835
+Z14 w1645945373
 R1
 R2
 R3
@@ -78,8 +78,8 @@ R3
 Z19 DEx4 work 8 cache_tb 0 22 7E4^229J[_6oaW@8H^^z00
 l71
 L8
-V?<4c39C=;`;zeH4i0RH9`1
-!s100 QP7A2lIVEASn0^d:E>nDh3
+V[G5iUP0FnoJCV57:_f^kc2
+!s100 eIDP`HXfg`nzZe8fV@Pbz1
 R7
 32
 R8

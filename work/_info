@@ -14,30 +14,29 @@ Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
 Z4 dC:/Users/yueli/Desktop/425/P2/Lab2
-Z5 8C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd
-Z6 FC:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd
+Z5 8cache.vhd
+Z6 Fcache.vhd
 l0
 L5
-V3ZYLNEDCB4o]EBl2SD6f12
+V_2c<DMegBT0W4kTcbznDM3
 !s100 C<;HKM7M38>>4jE0Q0h@Q2
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1645945376
+Z8 !s110 1645949047
 !i10b 1
-Z9 !s108 1645945376.000000
-Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
-Z11 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/cache.vhd|
+Z9 !s108 1645949047.000000
+Z10 !s90 -reportprogress|300|cache.vhd|
+Z11 !s107 cache.vhd|
 !i113 1
-Z12 o-work work -2002 -explicit
-Z13 tExplicit 1 CvgOpt 0
+Z12 tExplicit 1 CvgOpt 0
 Aarch
 R1
 R2
 R3
-DEx4 work 5 cache 0 22 3ZYLNEDCB4o]EBl2SD6f12
+DEx4 work 5 cache 0 22 _2c<DMegBT0W4kTcbznDM3
 l52
 L30
-VUSI<;=ZH;mb]7cZ6N5Ozk0
+V601DBKzn;c[JST4>QJ;]@0
 !s100 cT^5mE23[cdnK_HT;KTd@3
 R7
 32
@@ -48,53 +47,50 @@ R10
 R11
 !i113 1
 R12
-R13
 Ecache_tb
-Z14 w1645945373
+Z13 w1645949033
 R1
 R2
 R3
 R4
-Z15 8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
-Z16 FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
+Z14 8cache_tb.vhd
+Z15 Fcache_tb.vhd
 l0
 L5
-V7E4^229J[_6oaW@8H^^z00
+Vi]X^50aNb6mMEU7GdLLX93
 !s100 N8hTJD?ado=UI;TQE4:Ql3
 R7
 32
 R8
 !i10b 1
 R9
-Z17 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd|
-Z18 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd|
+Z16 !s90 -reportprogress|300|cache_tb.vhd|
+Z17 !s107 cache_tb.vhd|
 !i113 1
 R12
-R13
 Abehavior
 R1
 R2
 R3
-Z19 DEx4 work 8 cache_tb 0 22 7E4^229J[_6oaW@8H^^z00
+DEx4 work 8 cache_tb 0 22 i]X^50aNb6mMEU7GdLLX93
 l71
 L8
-V[G5iUP0FnoJCV57:_f^kc2
-!s100 eIDP`HXfg`nzZe8fV@Pbz1
+VLMN:Oc@?kUIB9W@CDX?K80
+!s100 OMU[<=oHk3UT^:32dI8E=2
 R7
 32
 R8
 !i10b 1
 R9
+R16
 R17
-R18
 !i113 1
 R12
-R13
 Abehaviour
 R1
 R2
 R3
-R19
+DEx4 work 8 cache_tb 0 22 7E4^229J[_6oaW@8H^^z00
 l71
 L8
 VFI_ZFDMDWMfFC6MYZk[C^3
@@ -104,91 +100,89 @@ R7
 !s110 1645655459
 !i10b 1
 !s108 1645655459.000000
-R17
-R18
+!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd|
+!s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd|
 !i113 1
+o-work work -2002 -explicit
 R12
-R13
 w1645578040
+FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
+8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/cache_tb.vhd
 Ememory
-Z20 w1609780044
+Z18 w1609780044
 R1
 R2
 R3
 R4
-Z21 8C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
-Z22 FC:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd
+Z19 8memory.vhd
+Z20 Fmemory.vhd
 l0
 L6
-V3LP4`=ezmehUVN:f8HSal1
+Vif>I=6PajYFom3<A@LFI=1
 !s100 TL`MNK5NTn0=f?i`Ph2JS3
 R7
 32
 R8
 !i10b 1
 R9
-Z23 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
-Z24 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/memory.vhd|
+Z21 !s90 -reportprogress|300|memory.vhd|
+Z22 !s107 memory.vhd|
 !i113 1
 R12
-R13
 Artl
 R1
 R2
 R3
-DEx4 work 6 memory 0 22 3LP4`=ezmehUVN:f8HSal1
+DEx4 work 6 memory 0 22 if>I=6PajYFom3<A@LFI=1
 l29
 L23
-VRGS>@C^TliVBWJiQY=8il2
+VURJOkA1O7;iPV?`Pmi[zU1
 !s100 Fl5=Y6J][VGa6l_6YBKG33
 R7
 32
 R8
 !i10b 1
 R9
-R23
-R24
+R21
+R22
 !i113 1
 R12
-R13
 Ememory_tb
-R20
+R18
 R1
 R2
 R3
 R4
-Z25 8C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
-Z26 FC:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd
+Z23 8memory_tb.vhd
+Z24 Fmemory_tb.vhd
 l0
 L5
-V_kiS2gc@klE4Vk3RdCF4^2
+V:gamI`Z?1_z;8ed=KM?Nm2
 !s100 K:h_7;_e46:2;TAj@4dAB3
 R7
 32
 R8
 !i10b 1
 R9
-Z27 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
-Z28 !s107 C:/Users/yueli/Desktop/425/P2/Lab2/simulation/modelsim/memory_tb.vhd|
+Z25 !s90 -reportprogress|300|memory_tb.vhd|
+Z26 !s107 memory_tb.vhd|
 !i113 1
 R12
-R13
 Abehaviour
 R1
 R2
 R3
-DEx4 work 9 memory_tb 0 22 _kiS2gc@klE4Vk3RdCF4^2
+Z27 DEx4 work 9 memory_tb 0 22 :gamI`Z?1_z;8ed=KM?Nm2
 l38
 L8
-VAIIG6V5IXNH>AnecMF_ib3
-!s100 :i96VH_8DL4G91ZkR7MdH1
+Z28 V@Dl3oQ1F5JEaJ[^]_8OQ81
+Z29 !s100 :i96VH_8DL4G91ZkR7MdH1
 R7
 32
 R8
 !i10b 1
 R9
-R27
-R28
+R25
+R26
 !i113 1
 R12
-R13

@@ -125,7 +125,7 @@ end process;
 	
 	-- CASE 6:  (v=1, d=1, read,  miss)
 	
-	-- CASE 7:  (v=0, d=0, read,  miss) impossible in practice
+	-- CASE 7:  (v=0, d=0, read,  miss)
 	
 	-- CASE 8:  (v=0, d=1, read,  miss) imposible 
 	
@@ -141,7 +141,7 @@ end process;
 	
 	-- CASE 14: (v=1, d=1, write, miss)
 	
-	-- CASE 15: (v=0, d=0, write, miss) impossible in practice
+	-- CASE 15: (v=0, d=0, write, miss) 
 	
 	-- CASE 16: (v=0, d=1, write, miss) imposible 
 	
@@ -301,11 +301,6 @@ begin
 	-- test case 7: read, not matching tags, invalid block, not dirty block
 	-- redundant test case, same as test case 3, because if block is invalid, then tags matching or not is irrelevant because
 	-- nothing to match tags with.
-	s_addr <= std_logic_vector(to_unsigned(1487*4, s_addr'length));
-	s_read <= '1';
-	s_write <= '0';
-	wait until rising_edge(s_waitrequest);
-	assert s_readdata /= std_logic_vector(to_unsigned(1487, 32)) report "test 7 failed" severity error; -- should be immposible in practice case
 	
 	
 	-- test case 8: read, not matching tags, invalid block, dirty block
@@ -376,7 +371,28 @@ begin
 	
 	-- test case 11: write, matching tags, invalid block, not dirty
 	-- setup: write to previously invalid (ie empty) block, ie: write to block without reading from it first
-	-- impossible
+	-- begin test:
+	s_addr <= std_logic_vector(to_unsigned(172*4, s_addr'length)); -- tag = 1, block = 11, offset = 0
+	s_read <= '0';
+	s_write <= '1';
+	s_writedata <= std_logic_vector(to_unsigned(1115, s_writedata'length));
+	wait until rising_edge(s_waitrequest);
+	-- assert: cache has updated value, and main mem has old value
+	s_read <= '1';
+	s_write <= '0';
+	wait until rising_edge(s_waitrequest);
+	assert s_readdata = std_logic_vector(to_unsigned(1115, 32)) report "test 11 failed" severity error;
+	
+    
+    -- Reset and Pause between tests
+    s_write <= '0';
+    s_read <= '0';
+    reset <= '1';
+    wait until rising_edge(clk);
+    reset <= '0';
+    wait until rising_edge(clk);
+    wait for 10 ns;
+	
 	
 	-- test case 12: write, matching tags, invalid block, dirty bit
 	-- redundant test case, same as test case 11, because if block is invalid, then dirty bit doesn't mean anything

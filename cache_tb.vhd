@@ -117,9 +117,9 @@ end process;
 	
 	-- CASE 2:  (v=1, d=1, read,  hit )
 	
-	-- CASE 3:  (v=0, d=0, read,  hit ) imposible 
+	-- CASE 3:  (v=0, d=0, read,  hit ) impossible 
 	
-	-- CASE 4:  (v=0, d=1, read,  hit ) imposible 
+	-- CASE 4:  (v=0, d=1, read,  hit ) impossible 
 	
 	-- CASE 5:  (v=1, d=0, read,  miss)
 	
@@ -127,23 +127,23 @@ end process;
 	
 	-- CASE 7:  (v=0, d=0, read,  miss) impossible in practice
 	
-	-- CASE 8:  (v=0, d=1, read,  miss) imposible 
+	-- CASE 8:  (v=0, d=1, read,  miss) impossible 
 	
 	-- CASE 9:  (v=1, d=0, write, hit )
 	
 	-- CASE 10: (v=1, d=1, write, hit )
 	
-	-- CASE 11: (v=0, d=0, write, hit ) imposible 
+	-- CASE 11: (v=0, d=0, write, hit ) impossible 
 	
-	-- CASE 12: (v=0, d=1, write, hit ) imposible 
+	-- CASE 12: (v=0, d=1, write, hit ) impossible 
 	
 	-- CASE 13: (v=1, d=0, write, miss)
 	
 	-- CASE 14: (v=1, d=1, write, miss)
 	
-	-- CASE 15: (v=0, d=0, write, miss) impossible in practice
+	-- CASE 15: (v=0, d=0, write, miss) impossible 
 	
-	-- CASE 16: (v=0, d=1, write, miss) imposible 
+	-- CASE 16: (v=0, d=1, write, miss) impossible 
 	
 test_process : process
 begin
@@ -164,7 +164,16 @@ begin
 	wait until rising_edge(s_waitrequest);
 	assert s_readdata = std_logic_vector(to_unsigned(12, s_readdata'length)) report "test case 0: write unsuccesful" severity error;
 	
-	
+	 -- Reset and Pause between tests
+    s_write <= '0';
+    s_read <= '0';
+    reset <= '1';
+    wait until rising_edge(clk);
+    reset <= '0';
+    wait until rising_edge(clk);
+    wait for 10 ns;
+	 
+	 
 	-- test case 1: Read, valid block, tag equal, not dirty
 	-- setup: read from address before test so that data is in cache
 	-- setup: write to address, evict to write to main mem, read addr again to load into cache
@@ -230,27 +239,28 @@ begin
     wait for 10 ns;
 	
 	
-	-- test case 3: Read, not valid block, tag equal, not dirty, = CLEAN HIT Impossible
-	-- simply try to load from addr that is not in cache yet (diff block index than above addresses)
-
-	
+	-- test case 3: Read, not valid block, tag equal, not dirty, CLEAN HIT 
+	-- Impossible
 	
 	-- test case 4: read, tag equal, not valid block, dirty bit  = DIRTY MISS , but doesn't exist
 	-- redundant test case due to case 3, as dirty bit doesn't matter if block is not valid
+	-- Impossible
 	
     
-    -- Reset and Pause between tests
-    s_write <= '0';
-    s_read <= '0';
-    reset <= '1';
-    wait until rising_edge(clk);
-    reset <= '0';
-    wait until rising_edge(clk);
-    wait for 10 ns;
-	
+
 	
 	-- test case 5: read, tag not equal, valid block, not dirty = CLEAN MISS
 	-- setup: read from mem into cache block with index 5
+	s_addr <= std_logic_vector(to_unsigned(148*4, s_addr'length));
+	s_read <= '0';
+	s_write <= '1';
+	s_writedata <= std_logic_vector(to_unsigned(97, s_writedata'length));
+	wait until rising_edge(s_waitrequest);
+	s_addr <= std_logic_vector(to_unsigned(404*4, s_addr'length));
+	s_read <= '0';
+	s_write <= '1';
+	s_writedata <= std_logic_vector(to_unsigned(33, s_writedata'length));
+	wait until rising_edge(s_waitrequest);
 	s_addr <= std_logic_vector(to_unsigned(148*4, s_addr'length)); -- tag = 1, index = 5, offset = 0
 	s_read <= '1';
 	s_write <= '0';
@@ -260,7 +270,7 @@ begin
 	s_read <= '1';
 	s_write <= '0';
 	wait until rising_edge(s_waitrequest);
-	assert s_readdata /= std_logic_vector(to_unsigned(0, 32)) report "test 5 failed" severity error;
+	assert s_readdata /= std_logic_vector(to_unsigned(97, 32)) report "test 5 failed" severity error;
 	
     
     -- Reset and Pause between tests
@@ -315,11 +325,10 @@ begin
 	
 	-- test case 9: write, matching tags, valid block, not dirty
 	-- setup: read from an addr
-	s_addr <= std_logic_vector(to_unsigned(164*4, s_addr'length)); -- tag = 1, index = 9, offset = 0
+	s_addr <= std_logic_vector(to_unsigned(164*4, s_addr'length));
 	s_read <= '1';
 	s_write <= '0';
 	wait until rising_edge(s_waitrequest);
-	-- begin test: write to same address as above
 	s_addr <= std_logic_vector(to_unsigned(164*4, s_addr'length));
 	s_read <= '0';
 	s_write <= '1';
@@ -443,8 +452,15 @@ begin
     
     
 	-- test case 15: write, not matching tags, invalid block, not dirty
-	-- redundant test case due to test 11
-	-- if block is invalid, then tags matching and dirty bit are irrelevant, so this test case is same as 11
+	s_addr <= std_logic_vector(to_unsigned(333*4, s_addr'length));
+	s_read <= '0';
+	s_write <= '1';
+	s_writedata <= std_logic_vector(to_unsigned(666, s_writedata'length));
+	wait until rising_edge(s_waitrequest);
+	s_read <= '1';
+	s_write <= '0';
+	wait until rising_edge(s_waitrequest);
+	assert s_readdata = std_logic_vector(to_unsigned(666, 32)) report "test 15 failed" severity error;
 	
 	
 	-- test case 16: write, not matching tags, invalid block, dirty bit
